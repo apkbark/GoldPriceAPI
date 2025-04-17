@@ -1,6 +1,8 @@
+import os
 from flask import Flask, jsonify
 import requests
 from datetime import datetime
+
 
 app = Flask(__name__)
 
@@ -56,10 +58,10 @@ def fetch_prices():
 
     except Exception as e:
         return {"error": str(e)}
+    
+    @app.route('/')
+def home():
+    return 'API is live!'
 
-@app.route("/")
-def index():
-    return jsonify(fetch_prices())
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
